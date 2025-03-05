@@ -6,6 +6,13 @@ The library internally uses React's `useReducer` which works standalone without 
 
 This is not a replacement for Redux. It's a lightweight alternative for simple state management action/reducer.
 
+## Install
+```bash
+npm install tiny-slice
+# or
+yarn add tiny-slice
+```
+
 ## Features
 
 - Lightweight
