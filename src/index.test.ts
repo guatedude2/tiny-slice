@@ -128,4 +128,30 @@ describe('TinySlice', () => {
       expect(result.current[0].error).toBe('Test error');
     });
   });
+
+  // Test deep cloning with multi-level states and circular references
+  describe('deep cloning', () => {
+    it('should handle multi-level states and circular references', () => {
+      const circularObj: any = { level1: { level2: { value: 42 } } };
+      circularObj.circularRef = circularObj;
+
+      const slice = createTinySlice({
+        initialState: circularObj,
+        actions: {
+          updateValue: (state, payload: number) => {
+            state.level1.level2.value = payload;
+          },
+        },
+      });
+
+      const { result } = renderHook(() => useTinySlice(slice));
+
+      act(() => {
+        result.current[1].updateValue(100);
+      });
+
+      expect(result.current[0].level1.level2.value).toBe(100);
+      expect(result.current[0].circularRef).toBe(result.current[0]);
+    });
+  });
 });
