@@ -3,55 +3,55 @@ import { useCallback, useReducer, useRef } from 'react';
 // Types
 export type ActionPayload<T> = T;
 
-type ActionReducer<State, Payload> = (state: State, payload: Payload) => void;
+export type ActionReducer<State, Payload> = (state: State, payload: Payload) => void;
 
-type ThunkAction<Result = void> = {
+export type ThunkAction<Result = void> = {
   type: string;
   payload: any;
   async: true;
   thunk: (dispatch: ThunkDispatch, getState: () => any) => Promise<Result>;
 };
 
-type Action = {
+export type Action = {
   type: string;
   payload: any;
   async?: false;
 };
 
 // Add ThunkDispatch type
-type ThunkDispatch = <T = void>(action: Action | ThunkAction<T>) => Promise<T>;
+export type ThunkDispatch = <T = void>(action: Action | ThunkAction<T>) => Promise<T>;
 
-type AsyncActionHelpers<State> = {
+export type AsyncActionHelpers<State> = {
   getState: () => State;
   dispatch: ThunkDispatch;
 };
 
-type AsyncActionReducer<State, Payload, Result> = {
+export type AsyncActionReducer<State, Payload, Result> = {
   action: (payload: Payload, helpers: AsyncActionHelpers<State>) => Promise<Result>;
   onSuccess?: (state: State, payload: Result) => void;
   onPending?: (state: State) => void;
   onError?: (state: State, payload: { error: Error }) => void;
 };
 
-type ActionReducers<State> = Record<
+export type ActionReducers<State> = Record<
   string,
   ActionReducer<State, any> | AsyncActionReducer<State, any, any>
 >;
 
-interface SliceOptions<State, AR extends ActionReducers<State>> {
+export interface SliceOptions<State, AR extends ActionReducers<State>> {
   initialState: State;
   actions: AR;
   debug?: boolean;
 }
 
-type ActionCreator<T> =
+export type ActionCreator<T> =
   T extends ActionReducer<any, infer P>
     ? (payload?: P) => Action
     : T extends AsyncActionReducer<any, infer P, infer R>
       ? (payload?: P) => ThunkAction<R>
       : never;
 
-type SliceActions<AR extends ActionReducers<any>> = {
+export type SliceActions<AR extends ActionReducers<any>> = {
   [K in keyof AR]: ActionCreator<AR[K]>;
 };
 
