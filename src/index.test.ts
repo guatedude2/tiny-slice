@@ -12,7 +12,7 @@ describe('TinySlice', () => {
   // Test slice creation
   describe('createTinySlice', () => {
     it('should create a slice with initial state', () => {
-      const slice = createTinySlice({
+      const slice = createTinySlice<TestState>({
         initialState: { count: 0, loading: false, error: null },
         actions: {},
       });
@@ -23,8 +23,8 @@ describe('TinySlice', () => {
 
   // Test synchronous actions
   describe('sync actions', () => {
-    const slice = createTinySlice({
-      initialState: { count: 0, loading: false, error: null } as TestState,
+    const slice = createTinySlice<TestState>({
+      initialState: { count: 0, loading: false, error: null },
       actions: {
         increment: (state, payload: number = 1) => {
           state.count += payload;
@@ -55,8 +55,8 @@ describe('TinySlice', () => {
   // Test async actions
   describe('async actions', () => {
     const mockAsyncIncrement = jest.fn();
-    const slice = createTinySlice({
-      initialState: { count: 0, loading: false, error: null } as TestState,
+    const slice = createTinySlice<TestState>({
+      initialState: { count: 0, loading: false, error: null },
       actions: {
         asyncIncrement: createAsyncAction<number, number, TestState>(
           async (payload: number) => {
@@ -94,8 +94,8 @@ describe('TinySlice', () => {
     });
 
     it('should handle async action errors', async () => {
-      const errorSlice = createTinySlice({
-        initialState: { count: 0, loading: false, error: null } as TestState,
+      const errorSlice = createTinySlice<TestState>({
+        initialState: { count: 0, loading: false, error: null },
         actions: {
           failingAction: createAsyncAction<void, void, TestState>(
             async () => {

@@ -98,9 +98,10 @@ function deepClone<T>(obj: T, seen = new WeakMap()): T {
 }
 
 // Create a tiny slice
-export function createTinySlice<State, AR extends ActionReducers<State>>(
-  options: SliceOptions<State, AR>
-) {
+export function createTinySlice<
+  State = any,
+  AR extends ActionReducers<State> = ActionReducers<State>,
+>(options: SliceOptions<State, AR>) {
   function reducer(state: State, action: { type: string; payload: any }) {
     const [actionType, status] = action.type.split('/');
     const actionReducer = options.actions[actionType];
