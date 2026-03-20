@@ -4,6 +4,13 @@
   "description": "A lightweight state management library for React",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guatedude2/tiny-slice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/guatedude2/tiny-slice/issues"
+  },
   "files": [
     "dist"
   ],
